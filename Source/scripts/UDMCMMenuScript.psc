@@ -109,6 +109,11 @@ function StartUp()
 	DodgeFrequency[1] = "Moderate"
 	DodgeFrequency[2] = "Frequent"
 	DodgeFrequency[3] = "Very frequent"
+
+	; broken start dodge fix
+	ChangeDDodgeStyle(2) ; I think this should be 2, not sure why dodgeStyle doesn't align with DodgeID though.
+	playerRef.setAnimationVariableInt("DodgeID", 1)
+	player.setAnimationVariablefloat("DodgeSpeed", 1.647)
 endFunction
 
 event OnConfigOpen()
