@@ -75,16 +75,6 @@ event OnRaceSwitchComplete()
 	OnLoad()
 endEvent
 
-function OnLoad()
-	MiscUtil.PrintConsole(PlayerRef.GetRace().IsRaceFlagSet(0x00000001))
-	rightRace = PlayerRef.GetRace().IsRaceFlagSet(0x00000001)
-	registerForAnimationEvent(player, "RollTrigger")
-	registerForAnimationEvent(player, "SidestepTrigger")
-	MaxSpeedPenalty = UDMaxSpeedPenalty.getValue()
-	armorCheck()
-	weightCheck()
-endFunction
-
 ;------------------------------------------------------------- States -------------------------------------------------------------
 
 state nulltwo
@@ -177,7 +167,6 @@ endFunction
 
 function ArmorCheck()
 	if(rightRace == false)
-		MiscUtil.PrintConsole("11")
 		return
 	endIf
 
@@ -192,7 +181,6 @@ endFunction
 
 function WeightCheck()
 	if(rightRace == false)
-		MiscUtil.PrintConsole("12")
 		return
 	endIf
 
@@ -218,9 +206,6 @@ function DodgeSpeedCheck(int valueID)
 	elseIf(valueID == 1)
 		DodgeSpeed = (1 - SpeedPenalty) * 1.647
 	endIf
-	MiscUtil.PrintConsole("TUDM value: "+valueID)
-	MiscUtil.PrintConsole("TUDM pene: "+SpeedPenalty)
-	MiscUtil.PrintConsole("TUDM dodge: "+DodgeSpeed)
 	playerRef.setAnimationVariablefloat("DodgeSpeed", DodgeSpeed)
 endFunction
 
@@ -268,6 +253,14 @@ function ReEnemyCheck(int AllEnemyCount, int LargeEnemyCount)
 	endIf
 endFunction
 
+function OnLoad()
+	rightRace = player.hasKeyword(ActorTypeNPC)
+	registerForAnimationEvent(player, "RollTrigger")
+	registerForAnimationEvent(player, "SidestepTrigger")
+	MaxSpeedPenalty = UDMaxSpeedPenalty.getValue()
+	armorCheck()
+	weightCheck()
+endFunction
 
 function InvincibleFrameRCheck(float InvincibleFrame)
 	IFrameR = InvincibleFrame

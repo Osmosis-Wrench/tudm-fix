@@ -109,20 +109,7 @@ function StartUp()
 	DodgeFrequency[1] = "Moderate"
 	DodgeFrequency[2] = "Frequent"
 	DodgeFrequency[3] = "Very frequent"
-
-	; broken start dodge fix
-	ChangeDDodgeStyle(2) ; I think this should be 2, not sure why dodgeStyle doesn't align with DodgeID though.
-	;playerRef.setAnimationVariableInt("DodgeID", 1)
-	playerRef.setAnimationVariablefloat("DodgeSpeed", 1.647)
-
-	RegisterForKey(27)
 endFunction
-
-Event OnKeyDown(int keycode)
-	if keycode == 27
-		UDActivationQuest.OnLoad()
-	endif
-endEvent
 
 event OnConfigOpen()
 	SetKeyMapOptionValue(Set_SneakKey, SneakKey, false)
