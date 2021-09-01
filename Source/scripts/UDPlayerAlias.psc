@@ -134,12 +134,12 @@ function SKSEStartUp()
 	endIf
 endFunction
 
-event OnRaceSwitchComplete()
-	UDActivationQuest.OnLoad()
-endEvent
-
 function SKSEShutDown()
 	if(UDSKSEFunctionsQuest.isRunning() == true)
 		UDSKSEFunctionsQuest.stop()
 	endIf
 endFunction
+
+event OnRaceSwitchComplete()
+	UDActivationQuest.OnLoad()
+endEvent

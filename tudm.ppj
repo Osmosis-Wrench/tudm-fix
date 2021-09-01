@@ -32,7 +32,9 @@
     </Folders>
     <ZipFiles Output="@Dist">
         <ZipFile Name="@ModName @Version" RootDir="@MyProject" Compression="deflate">
-            <Match>*.pex|*.psc|*.esp|</Match>
+            <Match>UDActivationScript.psc</Match>
+            <Match>UDPlayerAlias.psc</Match>
+            <Match>UDSKSEFunctionsScript.psc</Match>
         </ZipFile>
     </ZipFiles>
 </PapyrusProject>
