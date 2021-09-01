@@ -109,20 +109,12 @@ function StartUp()
 	DodgeFrequency[1] = "Moderate"
 	DodgeFrequency[2] = "Frequent"
 	DodgeFrequency[3] = "Very frequent"
-
-	; broken start dodge fix
-	ChangeDDodgeStyle(2) ; I think this should be 2, not sure why dodgeStyle doesn't align with DodgeID though.
-	;playerRef.setAnimationVariableInt("DodgeID", 1)
-	playerRef.setAnimationVariablefloat("DodgeSpeed", 1.647)
-
-	RegisterForKey(27)
+	UDDodgeStyle.setValueInt(1)
+	player.setAnimationVariableInt("DodgeID", 0)
+	UDActivationQuest.dodgeSpeedCheck(0)
+	UDNPCDodgeAIQuest.MCMAIUpdate()
 endFunction
 
-Event OnKeyDown(int keycode)
-	if keycode == 27
-		UDActivationQuest.OnLoad()
-	endif
-endEvent
 
 event OnConfigOpen()
 	SetKeyMapOptionValue(Set_SneakKey, SneakKey, false)
@@ -196,15 +188,15 @@ event OnPageReset(string page)
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		SetCursorPosition(0)
 		AddHeaderOption("General Settings")
-		Set_DodgeStyle = AddMenuOption("Combat Dodging Style", DodgeStyle[DodgeStyleIndex], 0)
+		Set_DodgeStyle = AddTextOption("Combat Dodging Style", "Roll Only (Locked by Modlist)", 1)
 		if(DodgeStyleIndex != 0) || (DodgeLock == true)
 			DSFlag = 1
 		else
 			DSFlag = 0
 		endIf
-		Set_DDodgeStyle = AddMenuOption("Default Dodging Style", DDodgeStyle[DDodgeStyleIndex], DSFlag)
-		ToggleDodgeLock = AddToggleOption("Lock Default Dodging Style", DodgeLock, 0)
-		Set_DodgeToggleKey = AddKeyMapOption("Dodging Style Toggle Key", DodgeToggleKey, 0)
+		Set_DDodgeStyle = AddTextOption("Default Dodging Style", "Roll Only (Locked by Modlist)", 1)
+		ToggleDodgeLock = AddTextOption("Lock Default Dodging Style", "Roll Only (Locked by Modlist)", 1)
+		Set_DodgeToggleKey = AddTextOption("Dodging Style Toggle Key", "Disabled by Modlist", 1)
 		AddEmptyOption()
 		AddHeaderOption("Player Settings")
 		ToggleGamepad = AddToggleOption("Gamepad/Controller Compatibility", Gamepad, 0)
