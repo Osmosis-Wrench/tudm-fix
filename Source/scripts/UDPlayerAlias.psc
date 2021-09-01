@@ -135,15 +135,7 @@ function SKSEStartUp()
 endFunction
 
 event OnRaceSwitchComplete()
-	;int UDDodgeStyleIndex = UDDodgeStyle.getValueInt()
-	;MiscUtil.PrintConsole("Test1234: "+UDDodgeStyleIndex)
-	;if (UDDodgeStyleIndex == 1)
-	;	playerRef.setAnimationVariableInt("DodgeID", 0)
-	;elseif (UDDodgeStyleIndex == 2)
-	;	playerRef.setAnimationVariableInt("DodgeID", 1)
-	;endif
 	UDActivationQuest.OnLoad()
-	;playerRef.setAnimationVariablefloat("DodgeSpeed", 1.647)
 endEvent
 
 function SKSEShutDown()
