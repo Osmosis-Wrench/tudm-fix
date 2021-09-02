@@ -11,7 +11,7 @@
         <Variable Name="ModName" Value="TUDM - Script Fix"/>
         <Variable Name="MyProject" Value="."/>
         <Variable Name="Dist" Value="../Dist"/>
-        <Variable Name="Version" Value="2.0"/>
+        <Variable Name="Version" Value="v3"/>
     </Variables>
     <Imports>
         <Import>@MyProject\Source\Scripts</Import>
