@@ -31,9 +31,20 @@ event OnInit()
 	utility.wait(2)
 	if(MQ101.isRunning()) && (MQ101.isStageDone(255) == false)
 		UDArmorWeight.setValueInt(0)
+		registerForAnimationEvent(playerRef, "FootLeft")
 		goToState("ArmorRemovedDone")
 	else
 		ArmorRemoved()
+	endIf
+endEvent
+
+event OnAnimationEvent(ObjectReference akSource, string asEventName)
+	if(asEventName == "FootLeft")
+		if(MQ101.isStageDone(255)) || (MQ101.isRunning() == false)
+			UnregisterForAnimationEvent(playerRef, "FootLeft")
+			UDSKSEFunctionsScript funcScript = (UDSKSEFunctionsQuest as UDSKSEFunctionsScript)
+			funcScript.OnAnimationEvent_Handle()
+		endIf
 	endIf
 endEvent
 
@@ -134,12 +145,12 @@ function SKSEStartUp()
 	endIf
 endFunction
 
-event OnRaceSwitchComplete()
-	UDActivationQuest.OnLoad()
-endEvent
-
 function SKSEShutDown()
 	if(UDSKSEFunctionsQuest.isRunning() == true)
 		UDSKSEFunctionsQuest.stop()
 	endIf
 endFunction
+
+event OnRaceSwitchComplete()
+	UDActivationQuest.OnLoad()
+endEvent

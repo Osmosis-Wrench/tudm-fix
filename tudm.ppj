@@ -8,10 +8,10 @@
     Zip="true">
     <Variables>
         <!--<Variable Name="" Value=""/>-->
-        <Variable Name="ModName" Value="tudm"/>
+        <Variable Name="ModName" Value="TUDM - Script Fix"/>
         <Variable Name="MyProject" Value="."/>
         <Variable Name="Dist" Value="../Dist"/>
-        <Variable Name="Version" Value="1.0"/>
+        <Variable Name="Version" Value="2.0"/>
     </Variables>
     <Imports>
         <Import>@MyProject\Source\Scripts</Import>
@@ -32,7 +32,9 @@
     </Folders>
     <ZipFiles Output="@Dist">
         <ZipFile Name="@ModName @Version" RootDir="@MyProject" Compression="deflate">
-            <Match>*.pex|*.psc|*.esp|</Match>
+            <Match>UDPlayerAlias*</Match>
+            <Match>UDSKSEFunctionsScript*</Match>
+            <Match>UDActivationScript*</Match>
         </ZipFile>
     </ZipFiles>
 </PapyrusProject>
