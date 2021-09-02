@@ -36,22 +36,18 @@ event OnKeyDown(int KeyCode)
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey)
 		playerRef.playIdle(SneakStopPlayer)
 		ResetSneakEye()
-	endif
-endEvent
-
-event OnAnimationEvent(ObjectReference akSource, string asEventName)
-	if(asEventName == "FootLeft")
-		if(MQ101.isStageDone(255)) || (MQ101.isRunning() == false)
-			unregisterForAnimationEvent(playerRef, "FootLeft")
-			if(UDGamepad.getValueInt() == false)
-				goToState("normal")
-			else
-				goToState("gamepad")
-			endIf
-		endIf
+		ResetCrosshair()
 	endIf
 endEvent
 
+
+function OnAnimationEvent_Handle()
+	if(UDGamepad.getValueInt() == false)
+		goToState("normal")
+	else
+		goToState("gamepad")
+	endIf
+endFunction
 
 ;------------------------------------------------------------- States -------------------------------------------------------------
 
@@ -83,6 +79,10 @@ function ResetSneakEye()
 	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", SneakEyeAlpha(IsSneaking(), 100))
 endFunction
 
+function ResetCrosshair()
+	UI.SetBool("HUD Menu","_root.HUDMovieBaseInstance.Crosshair._visible", true)
+endFunction
+
 function SetSneakKey(int newSneakKey)
 	UnRegisterForKey(SneakKey)
 	SneakKey = newSneakKey
@@ -96,7 +96,6 @@ function SetDodgeToggleKey(int newDodgeToggleKey)
 endFunction
 
 function NewGame()
-	registerForAnimationEvent(playerRef, "FootLeft")
 	goToState("newgame")
 endFunction
 
@@ -211,7 +210,7 @@ endFunction
 ;------------------------------------------------------------- Out Functions -------------------------------------------------------------
 
 bool function IsSneaking()
-	return Game.GetPlayer().isSneaking()
+	return PlayerRef.isSneaking()
 endFunction
 
 float function SneakEyeAlpha(bool visible, float max)

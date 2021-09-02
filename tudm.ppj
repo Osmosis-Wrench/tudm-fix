@@ -8,10 +8,10 @@
     Zip="true">
     <Variables>
         <!--<Variable Name="" Value=""/>-->
-        <Variable Name="ModName" Value="tudm"/>
+        <Variable Name="ModName" Value="Tsukiro TUDM - Script Fix"/>
         <Variable Name="MyProject" Value="."/>
         <Variable Name="Dist" Value="../Dist"/>
-        <Variable Name="Version" Value="1.0"/>
+        <Variable Name="Version" Value="v3"/>
     </Variables>
     <Imports>
         <Import>@MyProject\Source\Scripts</Import>
