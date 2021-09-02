@@ -107,7 +107,7 @@ function ResetSneakEye()
 endFunction
 
 function ResetCrosshair()
-	UI.SetNumber("HUD Menu","_root.HUDMovieBaseInstance.Crosshair._alpha", 100)
+	UI.SetBool("HUD Menu","_root.HUDMovieBaseInstance.Crosshair._visible", true)
 endFunction
 
 function SetSneakKey(int newSneakKey)
