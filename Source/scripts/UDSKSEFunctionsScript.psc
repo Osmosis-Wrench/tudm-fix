@@ -31,12 +31,9 @@ endEvent
 
 event OnKeyDown(int KeyCode)
 	if(playerRef.IsSneaking() == 0) && (playerRef.IsSprinting() == 0) && (KeyCode == SneakKey)
-		playerRef.playIdle(SneakStartPlayer)
-		ResetSneakEye()
+		StartSneakMode()
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey)
-		playerRef.playIdle(SneakStopPlayer)
-		ResetSneakEye()
-		ResetCrosshair()
+		EndSneakMode()
 	elseIf(KeyCode == DodgeToggleKey)
 		PreDodgeStyleChange(0)
 	endIf
@@ -102,12 +99,36 @@ endState
 
 ;------------------------------------------------------------- In Functions -------------------------------------------------------------
 
-function ResetSneakEye()
-	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", SneakEyeAlpha(IsSneaking(), 100))
+function StartSneakMode()
+	playerRef.playIdle(SneakStartPlayer)
+
+	int handle = UiCallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ShowElements")
+	
+	if handle == 0
+		return
+	endif
+	
+	UiCallback.PushString(handle, "StealthMode")
+	UiCallback.PushBool(handle, true)
+	
+	UiCallback.Send(handle)
+	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", 100)
 endFunction
 
-function ResetCrosshair()
-	UI.SetBool("HUD Menu","_root.HUDMovieBaseInstance.Crosshair._visible", true)
+function EndSneakMode()
+	playerRef.playIdle(SneakStopPlayer)
+
+	int handle = UiCallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ShowElements")
+	
+	if handle == 0
+		return
+	endif
+	
+	UiCallback.PushString(handle, "StealthMode")
+	UiCallback.PushBool(handle, false)
+	
+	UiCallback.Send(handle)
+	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", 0)
 endFunction
 
 function SetSneakKey(int newSneakKey)
@@ -235,17 +256,6 @@ endFunction
 
 
 ;------------------------------------------------------------- Out Functions -------------------------------------------------------------
-
-bool function IsSneaking()
-	return PlayerRef.isSneaking()
-endFunction
-
-float function SneakEyeAlpha(bool visible, float max)
-	if visible
-		return max
-	endif
-	return 0
-endFunction
 
 string function dodgestylestring(int dodgeID)
 	if(dodgeID == 0)

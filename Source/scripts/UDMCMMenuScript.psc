@@ -509,7 +509,7 @@ event OnOptionSelect(int option)
 		Gamepad = !Gamepad
 		SetToggleOptionValue(ToggleGamepad, Gamepad, false)
 		UDGamepad.setValueInt(Gamepad as int)
-		UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha",100)
+		;UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha",100)
 		UDSKSEFunctionsQuest.gamepad(Gamepad)
 		ForcePageReset()
 	elseIf(option == ToggleDodgeLock)
