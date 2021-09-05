@@ -1,0 +1,4 @@
+changelog v4
+ - BUGFIX: After sneaking, crosshair is broken forever. Fixed, with a special thanks to MrNeverLost for the assistance.
+ - BUGFIX: Can enter or exit sneak mode while in a menu. Fixed.
+ - CHANGE: SlidingCrouch support added to main mod, patch no longer needed. NOTE: I didn't test this support a heap, so if you have issues please report them.

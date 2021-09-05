@@ -35,6 +35,7 @@
             <Match>UDPlayerAlias*</Match>
             <Match>UDSKSEFunctionsScript*</Match>
             <Match>UDActivationScript*</Match>
+            <Match>UDMCMMenuScript*</Match>
         </ZipFile>
     </ZipFiles>
 </PapyrusProject>

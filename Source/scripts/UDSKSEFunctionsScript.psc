@@ -20,6 +20,7 @@ int DodgeToggleKey = 34
 
 bool changedone = false
 
+bool CrouchSlideMod_Installed
 
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
@@ -29,15 +30,34 @@ event OnInit()
 	endIf
 endEvent
 
+function onLoad()
+	if (Game.GetModByName("SprintSlide.esp") != 255)
+		if (!CrouchSlideMod_Installed)
+			CrouchSlideMod_Installed = true
+			Debug.notification("TUDM: Crouch Sliding Detected")
+		endif
+	Else
+		CrouchSlideMod_Installed = false
+	endif
+endfunction
+
 event OnKeyDown(int KeyCode)
-	if(playerRef.IsSneaking() == 0) && (playerRef.IsSprinting() == 0) && (KeyCode == SneakKey)
+	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		StartSneakMode()
-	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey)
+	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		EndSneakMode()
 	elseIf(KeyCode == DodgeToggleKey)
 		PreDodgeStyleChange(0)
 	endIf
 endEvent
+
+bool function Handle_CrouchSlide()
+	If (!CrouchSlideMod_Installed)
+		return (playerRef.IsSprinting() == 0)
+	Else
+		return true
+	endif
+endFunction
 
 event OnKeyUp(int KeyCode, Float HoldTime)
 	if(KeyCode == DodgeToggleKey) && (HoldTime < 0.5)
