@@ -16,6 +16,8 @@ GlobalVariable Property UDSKSEDetect Auto
 
 UDActivationScript Property UDActivationQuest Auto
 
+UDSKSEFunctionsScript funcScript
+
 actor player
 
 
@@ -42,7 +44,7 @@ event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	if(asEventName == "FootLeft")
 		if(MQ101.isStageDone(255)) || (MQ101.isRunning() == false)
 			UnregisterForAnimationEvent(playerRef, "FootLeft")
-			UDSKSEFunctionsScript funcScript = (UDSKSEFunctionsQuest as UDSKSEFunctionsScript)
+			funcScript = (UDSKSEFunctionsQuest as UDSKSEFunctionsScript)
 			funcScript.OnAnimationEvent_Handle()
 		endIf
 	endIf
@@ -51,6 +53,7 @@ endEvent
 event OnPlayerLoadGame()
 	SKSECheck()
 	UDActivationQuest.onLoad()
+	funcScript.UDMCMMenu.onLoad()
 	player.addSpell(UDPlayerCombatDetectSpell, false)
 	if(UDDodgeStyle.getValueInt() == 0)
 		player.addSpell(UDPlayerInventoryFlowSpell, false)

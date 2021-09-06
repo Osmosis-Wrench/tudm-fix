@@ -20,6 +20,7 @@ int DodgeToggleKey = 34
 
 bool changedone = false
 
+bool CrouchSlideMod_Installed
 
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
@@ -29,17 +30,60 @@ event OnInit()
 	endIf
 endEvent
 
+function onLoad()
+	if (Game.GetModByName("SprintSlide.esp") != 255)
+		if (!CrouchSlideMod_Installed)
+			CrouchSlideMod_Installed = true
+			debug.notification("TUDM: Crouch Sliding Detected")
+		endif
+	Else
+		CrouchSlideMod_Installed = false
+	endif
+endfunction
+
 event OnKeyDown(int KeyCode)
-	if(playerRef.IsSneaking() == 0) && (playerRef.IsSprinting() == 0) && (KeyCode == SneakKey)
-		playerRef.playIdle(SneakStartPlayer)
-		ResetSneakEye()
-	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey)
-		playerRef.playIdle(SneakStopPlayer)
-		ResetSneakEye()
-		ResetCrosshair()
+	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (PlayerRef.GetRace().IsRaceFlagSet(0x00000001))
+		StartSneakMode()
+	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
+		EndSneakMode()
+	elseIf(KeyCode == DodgeToggleKey)
+		PreDodgeStyleChange(0)
 	endIf
 endEvent
 
+bool function Handle_CrouchSlide()
+	If (!CrouchSlideMod_Installed)
+		return (playerRef.IsSprinting() == 0)
+	Else
+		return true
+	endif
+endFunction
+
+event OnKeyUp(int KeyCode, Float HoldTime)
+	if(KeyCode == DodgeToggleKey) && (HoldTime < 0.5)
+		if(playerRef.getAnimationVariableInt("IsDodging") == 0)
+			warningcount = 0
+			Stage2DodgeChange()
+		else
+			Stage2DodgeChange()
+			Warning()
+		endIf
+	elseIf(KeyCode == DodgeToggleKey) && (HoldTime >= 0.5)
+		if(changedone == false)
+			if(playerRef.isInCombat() == true)
+				ChangeCDodgeStyle()
+			else
+				if(UDDodgeStyle.getValueInt() == 0) && (UDMCMMenu.DodgeLock() == false)
+					ChangeDDodgeStyle()
+				else
+					ChangeCDodgeStyle()
+				endIf
+			endIf
+		else
+			changedone = false
+		endIf
+	endIf
+endEvent
 
 function OnAnimationEvent_Handle()
 	if(UDGamepad.getValueInt() == false)
@@ -75,12 +119,36 @@ endState
 
 ;------------------------------------------------------------- In Functions -------------------------------------------------------------
 
-function ResetSneakEye()
-	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", SneakEyeAlpha(IsSneaking(), 100))
+function StartSneakMode()
+	playerRef.playIdle(SneakStartPlayer)
+
+	int handle = UiCallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ShowElements")
+	
+	if handle == 0
+		return
+	endif
+	
+	UiCallback.PushString(handle, "StealthMode")
+	UiCallback.PushBool(handle, true)
+	
+	UiCallback.Send(handle)
+	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", 100)
 endFunction
 
-function ResetCrosshair()
-	UI.SetBool("HUD Menu","_root.HUDMovieBaseInstance.Crosshair._visible", true)
+function EndSneakMode()
+	playerRef.playIdle(SneakStopPlayer)
+
+	int handle = UiCallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ShowElements")
+	
+	if handle == 0
+		return
+	endif
+	
+	UiCallback.PushString(handle, "StealthMode")
+	UiCallback.PushBool(handle, false)
+	
+	UiCallback.Send(handle)
+	UI.SetNumber("HUD Menu", "_root.HUDMovieBaseInstance.StealthMeterInstance._alpha", 0)
 endFunction
 
 function SetSneakKey(int newSneakKey)
@@ -208,17 +276,6 @@ endFunction
 
 
 ;------------------------------------------------------------- Out Functions -------------------------------------------------------------
-
-bool function IsSneaking()
-	return PlayerRef.isSneaking()
-endFunction
-
-float function SneakEyeAlpha(bool visible, float max)
-	if visible
-		return max
-	endif
-	return 0
-endFunction
 
 string function dodgestylestring(int dodgeID)
 	if(dodgeID == 0)
