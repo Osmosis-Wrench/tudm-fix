@@ -79,13 +79,13 @@ actor player
 int DodgeID
 
 event OnInit()
-	; Nothing anymore
-endEvent
-
-event OnConfigInit()
 	player = PlayerRef
 	StartUp()
 	OnLoad()
+endEvent
+
+event OnConfigInit()
+	parent.OnInit()
 endEvent
 
 function OnLoad()
