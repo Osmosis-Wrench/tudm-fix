@@ -1,4 +1,16 @@
 changelog v4
  - BUGFIX: After sneaking, crosshair is broken forever. Fixed, with a special thanks to MrNeverLost for the assistance.
+ - BUGFIX: Trying to enter sneak mode while on a mount would break the crosshair. Fixed.
+ - BUGFIX: Trying to enter sneak mode while transformed would break the crosshair. Fixed.
  - BUGFIX: Can enter or exit sneak mode while in a menu. Fixed.
- - CHANGE: SlidingCrouch support added to main mod, patch no longer needed. NOTE: I didn't test this support a heap, so if you have issues please report them.
+ - BUGFIX: Can enter or exit sneak mode while swimming. Fixed.
+ - CHANGE: SlidingCrouch support added to main mod, my patch no longer needed. NOTE: I didn't test this support a heap, so if you have issues please report them.
+
+changelog v3
+ - B̶U̶G̶F̶I̶X̶:̶ ̶A̶f̶t̶e̶r̶ ̶s̶n̶e̶a̶k̶i̶n̶g̶,̶ ̶c̶r̶o̶s̶s̶h̶a̶i̶r̶ ̶b̶r̶o̶k̶e̶n̶ ̶f̶o̶r̶e̶v̶e̶r̶.̶ ̶F̶i̶x̶e̶d̶.̶
+ - BUGFIX: Dodge doesn't work until G is hit on first load. Fixed.
+ - BUGFIX: Dodge is broken after transforming into beast form. Fixed.
+ - BUGFIX: Stamina cost for dodges isn't calculated until after first save/load cycle. Fixed
+ - CHANGE: OnFootLeft animation event listener moved to PlayerAlias script, now can actually fire.
+ - OPTIMIZATION: Game.GetPlayer() replaced with PlayerRef. (Minor)
+ - Other minor fixes and changes.

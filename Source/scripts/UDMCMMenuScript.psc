@@ -249,10 +249,20 @@ event OnPageReset(string page)
 		Slider_StaminaCostS = AddSliderOption("Stamina Cost", StaminaCostS, "{0}", DS3Flag)
 		Slider_InvincibleFrameS = AddSliderOption("Invincible Time Frame", InvincibleFrameS, "{2}s", DS3Flag)
 		AddEmptyOption()
+		AddHeaderOption("Compatibility Modes Active")
+		AddTextOptionST("Crouch_Sliding_State", "Crouch Sliding Mod", (Game.GetModByName("SprintSlide.esp") != 255))
+		AddEmptyOption()
 		AddHeaderOption("Uninstaller")
 		ToggleUninstaller = AddToggleOption("Uninstall TUDM", Uninstaller, 0)
+		
 	endIf
 endEvent
+
+state Crouch_Sliding_State
+	event OnHighLightST()
+		SetInfoText("Compatibillity for Crouch Sliding by NickaNak. \n Remember you need the Crouch Sliding TUDM patch from the Crouch Sliding Nexus page.")
+	endevent
+endstate
 
 event OnOptionMenuAccept(int option, int index)
 	if(option == Set_DodgeSpeed)

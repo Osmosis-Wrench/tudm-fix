@@ -34,7 +34,7 @@ function onLoad()
 	if (Game.GetModByName("SprintSlide.esp") != 255)
 		if (!CrouchSlideMod_Installed)
 			CrouchSlideMod_Installed = true
-			Debug.notification("TUDM: Crouch Sliding Detected")
+			debug.notification("TUDM: Crouch Sliding Detected")
 		endif
 	Else
 		CrouchSlideMod_Installed = false
@@ -42,7 +42,7 @@ function onLoad()
 endfunction
 
 event OnKeyDown(int KeyCode)
-	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
+	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (PlayerRef.GetRace().IsRaceFlagSet(0x00000001))
 		StartSneakMode()
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		EndSneakMode()
