@@ -46,8 +46,6 @@ event OnKeyDown(int KeyCode)
 		StartSneakMode()
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		EndSneakMode()
-	elseIf(KeyCode == DodgeToggleKey)
-		PreDodgeStyleChange(0)
 	endIf
 endEvent
 
@@ -58,32 +56,6 @@ bool function Handle_CrouchSlide()
 		return true
 	endif
 endFunction
-
-event OnKeyUp(int KeyCode, Float HoldTime)
-	if(KeyCode == DodgeToggleKey) && (HoldTime < 0.5)
-		if(playerRef.getAnimationVariableInt("IsDodging") == 0)
-			warningcount = 0
-			Stage2DodgeChange()
-		else
-			Stage2DodgeChange()
-			Warning()
-		endIf
-	elseIf(KeyCode == DodgeToggleKey) && (HoldTime >= 0.5)
-		if(changedone == false)
-			if(playerRef.isInCombat() == true)
-				ChangeCDodgeStyle()
-			else
-				if(UDDodgeStyle.getValueInt() == 0) && (UDMCMMenu.DodgeLock() == false)
-					ChangeDDodgeStyle()
-				else
-					ChangeCDodgeStyle()
-				endIf
-			endIf
-		else
-			changedone = false
-		endIf
-	endIf
-endEvent
 
 function OnAnimationEvent_Handle()
 	if(UDGamepad.getValueInt() == false)
