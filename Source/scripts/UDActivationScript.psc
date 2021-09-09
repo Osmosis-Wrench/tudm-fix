@@ -43,6 +43,9 @@ int DDodgeStyle = 0
 
 bool rightRace = false
 
+race werewolfBeastRace
+race vampireBeastRace
+
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
 event OnInit()
@@ -50,6 +53,28 @@ event OnInit()
 	Utility.Wait(1.0)
 	onload()
 endEvent
+
+function OnLoad()
+	rightRace = checkValidRace()
+	registerForAnimationEvent(player, "RollTrigger")
+	registerForAnimationEvent(player, "SidestepTrigger")
+	MaxSpeedPenalty = UDMaxSpeedPenalty.getValue()
+	armorCheck()
+	weightCheck()
+endFunction
+
+bool function checkValidRace()
+	if (!werewolfBeastRace)
+		werewolfBeastRace = game.GetFormFromFile(0x0CDD84, "Skyrim.esm") as race
+		vampireBeastRace = game.GetFormFromFile(0x00283A, "Dawnguard.esm") as race
+	endif
+	race playerRace = PlayerRef.GetRace()
+	if playerRace != werewolfBeastRace && playerRace != werewolfBeastRace
+		return true
+	Else
+		return false
+	endif
+endFunction
 
 event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	if(asEventName == "RollTrigger")
@@ -246,15 +271,6 @@ function ReEnemyCheck(int AllEnemyCount, int LargeEnemyCount)
 	elseIf(AllEnemyCount == 0) && (LargeEnemyCount == 0) && (player.getCombatState() == 0)
 		defaultDodgeStyle()
 	endIf
-endFunction
-
-function OnLoad()
-	rightRace = PlayerRef.GetRace().IsRaceFlagSet(0x00000001)
-	registerForAnimationEvent(player, "RollTrigger")
-	registerForAnimationEvent(player, "SidestepTrigger")
-	MaxSpeedPenalty = UDMaxSpeedPenalty.getValue()
-	armorCheck()
-	weightCheck()
 endFunction
 
 function InvincibleFrameRCheck(float InvincibleFrame)
