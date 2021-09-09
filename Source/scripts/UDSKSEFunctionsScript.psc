@@ -42,7 +42,7 @@ function onLoad()
 endfunction
 
 event OnKeyDown(int KeyCode)
-	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (PlayerRef.GetRace().IsRaceFlagSet(0x00000001))
+	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (PlayerRef.GetRace().IsRaceFlagSet(0x00000001)) && Game.IsLookingControlsEnabled()
 		StartSneakMode()
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		EndSneakMode()

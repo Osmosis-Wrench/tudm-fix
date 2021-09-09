@@ -1,3 +1,8 @@
+changelog v4.5
+ - BUGFIX: Sneaking while in crafting menu would break crosshair. Fixed.
+ - BUGFIX: I was checking races in a stupid way which prevented vampires from being able to dodge. Fixed by explicitly checking if player is currently Vampire Lord race or Werewolf Beast race, this will hopefully also ensure better compatibility with race mods in general.
+ 
+
 changelog v4
  - BUGFIX: After sneaking, crosshair is broken forever. Fixed, with a special thanks to MrNeverLost for the assistance.
  - BUGFIX: Trying to enter sneak mode while on a mount would break the crosshair. Fixed.
