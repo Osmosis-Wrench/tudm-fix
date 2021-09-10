@@ -54,7 +54,7 @@ Event OnMenuClose(String MenuName)
 	endif
 EndEvent
 
-bool function isPlayerFemale()
+bool function isPlayerFemale() ; make this more simple, just store whatever getsex returns and if it changes run. ;actually why not just always run????
 	if playerBase.GetSex() == 0
 		return false
 	else
