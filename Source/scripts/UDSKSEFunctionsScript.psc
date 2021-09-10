@@ -22,6 +22,9 @@ bool changedone = false
 
 bool CrouchSlideMod_Installed
 
+race werewolfBeastRace
+race vampireBeastRace
+
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
 event OnInit()
@@ -42,12 +45,27 @@ function onLoad()
 endfunction
 
 event OnKeyDown(int KeyCode)
-	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (PlayerRef.GetRace().IsRaceFlagSet(0x00000001)) && Game.IsLookingControlsEnabled()
+	if(playerRef.IsSneaking() == 0) && (Handle_CrouchSlide()) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode()) && (!PlayerRef.IsSwimming()) && (!PlayerRef.IsOnMount()) && (checkValidRace()) && Game.IsLookingControlsEnabled()
 		StartSneakMode()
 	elseIf(playerRef.IsSneaking() == 1) && (KeyCode == SneakKey) && (!Utility.IsInMenuMode())
 		EndSneakMode()
+	elseIf(KeyCode == DodgeToggleKey)
+		PreDodgeStyleChange(0)
 	endIf
 endEvent
+
+bool function checkValidRace()
+	if (!werewolfBeastRace)
+		werewolfBeastRace = game.GetFormFromFile(0x0CDD84, "Skyrim.esm") as race
+		vampireBeastRace = game.GetFormFromFile(0x00283A, "Dawnguard.esm") as race
+	endif
+	race playerRace = PlayerRef.GetRace()
+	if playerRace != werewolfBeastRace && playerRace != werewolfBeastRace
+		return true
+	Else
+		return false
+	endif
+endFunction
 
 bool function Handle_CrouchSlide()
 	If (!CrouchSlideMod_Installed)

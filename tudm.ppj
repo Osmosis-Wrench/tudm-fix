@@ -11,7 +11,7 @@
         <Variable Name="ModName" Value="Tsukiro TUDM - Script Fix"/>
         <Variable Name="MyProject" Value="."/>
         <Variable Name="Dist" Value="../Dist"/>
-        <Variable Name="Version" Value="v4.5"/>
+        <Variable Name="Version" Value="v4.6"/>
     </Variables>
     <Imports>
         <Import>@MyProject\Source\Scripts</Import>
