@@ -19,12 +19,16 @@ UDActivationScript Property UDActivationQuest Auto
 UDSKSEFunctionsScript funcScript
 
 actor player
+actorbase playerBase
+bool playerFemale
 
 
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
 event OnInit()
 	player = PlayerRef
+	playerBase = Player.GetActorBase()
+	RegisterForMenu("RaceSex Menu")
 	SKSECheck()
 	player.addSpell(UDPlayerCombatDetectSpell, false)
 	if(UDDodgeStyle.getValueInt() == 0)
@@ -39,6 +43,24 @@ event OnInit()
 		ArmorRemoved()
 	endIf
 endEvent
+
+Event OnMenuOpen(String MenuName)
+	playerFemale = isPlayerFemale()
+EndEvent
+
+Event OnMenuClose(String MenuName)
+	if playerFemale != isPlayerFemale()
+		UDActivationQuest.OnLoad()
+	endif
+EndEvent
+
+bool function isPlayerFemale()
+	if playerBase.GetSex() == 0
+		return false
+	else
+		return true
+	endif
+endFunction
 
 event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	if(asEventName == "FootLeft")

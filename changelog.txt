@@ -1,3 +1,6 @@
+changelog v4.7
+ - BUGFIX: Changing race or sex in racemenu breaks dodge. Fixed.
+
 changelog v4.6
  - BUGFIX: Same race check issue was preventing crouching as vampire. Fixed.
 
