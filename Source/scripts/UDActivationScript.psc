@@ -78,9 +78,11 @@ endFunction
 
 event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	ConsoleUtil.PrintMessage(asEventName)
+	ConsoleUtil.PrintMessage(DDodgeStyle)
+	Thing()
 	if(asEventName == "RollTrigger")
-		;InvincibleFrame(0)
-		;StaminaDamage(0)
+		InvincibleFrame(0)
+		StaminaDamage(0)
 	elseIf(asEventName == "SidestepTrigger")
 		InvincibleFrame(1)
 		StaminaDamage(1)
@@ -100,6 +102,9 @@ endEvent
 ;------------------------------------------------------------- States -------------------------------------------------------------
 
 state nulltwo
+	function Thing()
+		ConsoleUtil.PrintMessage(1)
+	endFunction
 	function DefaultDodgeStyle()
 	endFunction
 	
@@ -114,6 +119,9 @@ state nulltwo
 endState
 
 state onenull
+	function Thing()
+		ConsoleUtil.PrintMessage(2)
+	endFunction
 	function DefaultDodgeStyle()
 		player.setAnimationVariableInt("DodgeID", 0)
 		dodgeSpeedCheck(0)
@@ -130,6 +138,9 @@ state onenull
 endState
 
 state onetwo
+	function Thing()
+		ConsoleUtil.PrintMessage(3)
+	endFunction
 	function DefaultDodgeStyle()
 		player.setAnimationVariableInt("DodgeID", 0)
 		dodgeSpeedCheck(0)
@@ -146,6 +157,9 @@ state onetwo
 endState
 
 state twonull
+	function Thing()
+		ConsoleUtil.PrintMessage(4)
+	endFunction
 	function DefaultDodgeStyle()
 		player.setAnimationVariableInt("DodgeID", 1)
 		dodgeSpeedCheck(1)
@@ -162,6 +176,9 @@ state twonull
 endState
 
 state twotwo
+	function Thing()
+		ConsoleUtil.PrintMessage(5)
+	endFunction
 	function DefaultDodgeStyle()
 		if(player.hasKeyword(ActorTypeNPC) == false)
 			return
@@ -185,6 +202,10 @@ endState
 ;------------------------------------------------------------- In functions -------------------------------------------------------------
 
 function DefaultDodgeStyle()
+endFunction
+
+function Thing()
+	ConsoleUtil.PrintMessage("zero")
 endFunction
 
 function ArmorCheck()
