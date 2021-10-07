@@ -251,18 +251,37 @@ event OnPageReset(string page)
 		AddEmptyOption()
 		AddHeaderOption("Compatibility Modes Active")
 		AddTextOptionST("Crouch_Sliding_State", "Crouch Sliding Mod", (Game.GetModByName("SprintSlide.esp") != 255))
+		AddTextOptionST("Alternate_Perspective_State", "Alternate Perspective", (Game.GetModByName("AlternatePerspective.esp") != 255))
+		AddHeaderOption("Optional Fixes")
+		AddToggleOptionST("Fix_Stepdodge_State", "Stepdodge Stamina Fix", UDSKSEFunctionsQuest.StepdodgeStaminaFixGet())
 		AddEmptyOption()
 		AddHeaderOption("Uninstaller")
 		ToggleUninstaller = AddToggleOption("Uninstall TUDM", Uninstaller, 0)
-		
 	endIf
 endEvent
 
 state Crouch_Sliding_State
 	event OnHighLightST()
-		SetInfoText("Compatibillity for Crouch Sliding by NickaNak. \n Remember you need the Crouch Sliding TUDM patch from the Crouch Sliding Nexus page.")
+		SetInfoText("Compatibillity for Crouch Sliding by NickaNak. \n Remember you need the Crouch Sliding TUDM patch esp from the Crouch Sliding Nexus page.")
 	endevent
 endstate
+
+state Alternate_Perspective_State
+	event OnHighLightST()
+		SetInfoText("Compatibillity for Alternate Perspective by Scrab \n Remember you need the Alternate Perspective TUDM patch esp from the Alternate Perspective Nexus page.")
+	endevent
+endstate
+
+state Fix_Stepdodge_State
+	Event OnSelectST()
+		UDSKSEFunctionsQuest.StepdodgeStaminaFix()
+		SetToggleOptionValueST(UDSKSEFunctionsQuest.StepdodgeStaminaFixGet())
+	endEvent
+
+	event OnHighLightST()
+		SetInfoText("Enable optional fix for stepdodge stamina drain in first person, current fix for this in inelegant but functional.")
+	endevent
+endState
 
 event OnOptionMenuAccept(int option, int index)
 	if(option == Set_DodgeSpeed)

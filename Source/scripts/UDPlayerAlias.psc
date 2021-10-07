@@ -18,24 +18,22 @@ UDActivationScript Property UDActivationQuest Auto
 
 UDSKSEFunctionsScript funcScript
 
-actor player
 actorbase playerBase
-bool playerFemale
+int playerSex
 
 
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
 event OnInit()
-	player = PlayerRef
-	playerBase = Player.GetActorBase()
+	playerBase = playerRef.GetActorBase()
 	RegisterForMenu("RaceSex Menu")
 	SKSECheck()
-	player.addSpell(UDPlayerCombatDetectSpell, false)
+	playerRef.addSpell(UDPlayerCombatDetectSpell, false)
 	if(UDDodgeStyle.getValueInt() == 0)
-		player.addSpell(UDPlayerInventoryFlowSpell, false)
+		playerRef.addSpell(UDPlayerInventoryFlowSpell, false)
 	endIf
 	utility.wait(2)
-	if(MQ101.isRunning()) && (MQ101.isStageDone(255) == false)
+	if(safeStartCheck())
 		UDArmorWeight.setValueInt(0)
 		registerForAnimationEvent(playerRef, "FootLeft")
 		goToState("ArmorRemovedDone")
@@ -45,26 +43,42 @@ event OnInit()
 endEvent
 
 Event OnMenuOpen(String MenuName)
-	playerFemale = isPlayerFemale()
+	playerSex = playerBase.GetSex()
 EndEvent
 
 Event OnMenuClose(String MenuName)
-	if playerFemale != isPlayerFemale()
+	if playerSex != playerBase.GetSex()
 		UDActivationQuest.OnLoad()
 	endif
 EndEvent
 
-bool function isPlayerFemale()
-	if playerBase.GetSex() == 0
-		return false
+bool function safeStartCheck()
+	if(Game.GetModByName("AlternatePerspective.esp") != 255)
+		return AlternatePerspectiveCheck()
 	else
-		return true
+		return VanillaCheck()
 	endif
 endFunction
 
+bool function VanillaCheck()
+	if(MQ101.isRunning() && (MQ101.isStageDone(255) == false))
+		return true
+	Else
+		return false
+	endif
+endfunction
+
+bool function AlternatePerspectiveCheck()
+	if(MQ101.GetStage() > 5) && (MQ101.isStageDone(255) == false)
+		return true
+	Else
+		return false
+	endif
+endfunction
+
 event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	if(asEventName == "FootLeft")
-		if(MQ101.isStageDone(255)) || (MQ101.isRunning() == false)
+		if(safeStartCheck())
 			UnregisterForAnimationEvent(playerRef, "FootLeft")
 			funcScript = (UDSKSEFunctionsQuest as UDSKSEFunctionsScript)
 			funcScript.OnAnimationEvent_Handle()
@@ -76,9 +90,9 @@ event OnPlayerLoadGame()
 	SKSECheck()
 	UDActivationQuest.onLoad()
 	funcScript.UDMCMMenu.onLoad()
-	player.addSpell(UDPlayerCombatDetectSpell, false)
+	playerRef.addSpell(UDPlayerCombatDetectSpell, false)
 	if(UDDodgeStyle.getValueInt() == 0)
-		player.addSpell(UDPlayerInventoryFlowSpell, false)
+		playerRef.addSpell(UDPlayerInventoryFlowSpell, false)
 	endIf
 	ArmorRemoved()
 endEvent
@@ -158,7 +172,7 @@ function SKSECheck()
 endFunction
 
 function ArmorRemoved()
-	player.unequipAll()
+	playerRef.unequipAll()
 	UDArmorWeight.setValueInt(0)
 	goToState("ArmorRemovedDone")
 	debug.messagebox("Re-equip all your armor")

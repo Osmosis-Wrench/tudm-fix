@@ -22,16 +22,42 @@ bool changedone = false
 
 bool CrouchSlideMod_Installed
 
+bool StepdodgeStaminaFixEnabled = false
+
 race werewolfBeastRace
 race vampireBeastRace
 
 ;------------------------------------------------------------- Events -------------------------------------------------------------
 
 event OnInit()
-	if(MQ101.isRunning()) && (MQ101.isStageDone(255) == false)
+	if(safeStartCheck())
 		NewGame()
 	endIf
 endEvent
+
+bool function safeStartCheck()
+	if(Game.GetModByName("AlternatePerspective.esp") != 255)
+		return AlternatePerspectiveCheck()
+	else
+		return VanillaCheck()
+	endif
+endFunction
+
+bool function VanillaCheck()
+	if(MQ101.isRunning() && (MQ101.isStageDone(255) == false))
+		return true
+	Else
+		return false
+	endif
+endfunction
+
+bool function AlternatePerspectiveCheck()
+	if(MQ101.GetStage() > 5) && (MQ101.isStageDone(255) == false)
+		return true
+	Else
+		return false
+	endif
+endfunction
 
 function onLoad()
 	if (Game.GetModByName("SprintSlide.esp") != 255)
@@ -113,6 +139,7 @@ endFunction
 
 state newgame
 	event OnKeyDown(int KeyCode)
+		writelog(1)
 	endEvent
 
 	event OnKeyUp(int KeyCode, float HoldTime)
@@ -129,7 +156,7 @@ endState
 
 state warning
 	function Warning()
-
+		writelog(2)
 	endFunction
 endState
 
@@ -300,3 +327,20 @@ string function dodgestylestring(int dodgeID)
 		return "Sidestep"
 	endIf
 endFunction
+
+Function StepdodgeStaminaFix()
+	StepdodgeStaminaFixEnabled = !StepdodgeStaminaFixEnabled
+endFunction
+
+bool Function StepdodgeStaminaFixGet()
+	return StepdodgeStaminaFixEnabled
+endFunction
+
+; This just makes life easier sometimes.
+Function WriteLog(String OutputLog, bool error = false)
+    MiscUtil.PrintConsole("TUDM: " + OutputLog)
+    Debug.Trace("TUDM: " + OutputLog)
+    if (error == true)
+        Debug.Notification("TUDM: " + OutputLog)
+    endIF
+EndFunction
