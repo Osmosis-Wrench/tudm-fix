@@ -161,7 +161,7 @@ function ArmorRemoved()
 	player.unequipAll()
 	UDArmorWeight.setValueInt(0)
 	goToState("ArmorRemovedDone")
-	debug.messagebox("Re-equip all your armor")
+	;debug.messagebox("Re-equip all your armor")
 endFunction
 
 function SKSEStartUp()
