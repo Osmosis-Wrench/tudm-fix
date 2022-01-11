@@ -24,6 +24,8 @@ Quest Property MQ101 Auto
 
 Spell Property UDRollZeroStaminaDamage Auto
 
+bool StepdodgeStaminaFixEnabled = true
+
 actor player
 
 string eventID
@@ -77,14 +79,23 @@ bool function checkValidRace()
 endFunction
 
 event OnAnimationEvent(ObjectReference akSource, string asEventName)
-	ConsoleUtil.PrintMessage(asEventName)
-	if(asEventName == "RollTrigger")
-		InvincibleFrame(0)
-		StaminaDamage(0)
-	elseIf(asEventName == "SidestepTrigger")
-		InvincibleFrame(1)
-		StaminaDamage(1)
-	endIf
+	if (StepdodgeStaminaFixEnabled) ; create hotpath for stepdodge to reduce latency as much as possible, because of the extra processing with the fix enabled.
+		if(asEventName == "SidestepTrigger")
+			InvincibleFrame(1)
+			StaminaDamage(1)
+		elseIf(asEventName == "RollTrigger" && player.getAnimationVariableInt("DodgeID") != 1)
+			InvincibleFrame(0)
+			StaminaDamage(0)
+		endIf
+	else
+		if(asEventName == "RollTrigger")
+			InvincibleFrame(0)
+			StaminaDamage(0)
+		elseIf(asEventName == "SidestepTrigger")
+			InvincibleFrame(1)
+			StaminaDamage(1)
+		endIf
+	endif
 endEvent
 
 event OnAnimationEventUnregistered(ObjectReference akSource, string asEventName)
@@ -326,4 +337,12 @@ endFunction
 
 float function MaxSpeedPenaltyOut()
 	return MaxSpeedPenalty
+endFunction
+
+Function StepdodgeStaminaFix()
+	StepdodgeStaminaFixEnabled = !StepdodgeStaminaFixEnabled
+endFunction
+
+bool Function StepdodgeStaminaFixGet()
+	return StepdodgeStaminaFixEnabled
 endFunction

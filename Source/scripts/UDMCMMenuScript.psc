@@ -253,7 +253,7 @@ event OnPageReset(string page)
 		AddTextOptionST("Crouch_Sliding_State", "Crouch Sliding Mod", (Game.GetModByName("SprintSlide.esp") != 255))
 		AddTextOptionST("Alternate_Perspective_State", "Alternate Perspective", (Game.GetModByName("AlternatePerspective.esp") != 255))
 		AddHeaderOption("Optional Fixes")
-		AddToggleOptionST("Fix_Stepdodge_State", "Stepdodge Stamina Fix", UDSKSEFunctionsQuest.StepdodgeStaminaFixGet())
+		AddToggleOptionST("Fix_Stepdodge_State", "Stepdodge Stamina Fix", UDActivationQuest.StepdodgeStaminaFixGet())
 		AddEmptyOption()
 		AddHeaderOption("Uninstaller")
 		ToggleUninstaller = AddToggleOption("Uninstall TUDM", Uninstaller, 0)
@@ -262,24 +262,24 @@ endEvent
 
 state Crouch_Sliding_State
 	event OnHighLightST()
-		SetInfoText("Compatibillity for Crouch Sliding by NickaNak. \n Remember you need the Crouch Sliding TUDM patch esp from the Crouch Sliding Nexus page.")
+		SetInfoText("Compatibility for Crouch Sliding by NickaNak. \n Remember you need the Crouch Sliding TUDM patch esp from the Crouch Sliding Nexus page.")
 	endevent
 endstate
 
 state Alternate_Perspective_State
 	event OnHighLightST()
-		SetInfoText("Compatibillity for Alternate Perspective by Scrab \n Remember you need the Alternate Perspective TUDM patch esp from the Alternate Perspective Nexus page.")
+		SetInfoText("Compatibility for Alternate Perspective by Scrab \n Remember you need the Alternate Perspective TUDM patch esp from the Alternate Perspective Nexus page.")
 	endevent
 endstate
 
 state Fix_Stepdodge_State
 	Event OnSelectST()
-		UDSKSEFunctionsQuest.StepdodgeStaminaFix()
-		SetToggleOptionValueST(UDSKSEFunctionsQuest.StepdodgeStaminaFixGet())
+		UDActivationQuest.StepdodgeStaminaFix()
+		SetToggleOptionValueST(UDActivationQuest.StepdodgeStaminaFixGet())
 	endEvent
 
 	event OnHighLightST()
-		SetInfoText("Enable optional fix for stepdodge stamina drain in first person, current fix for this in inelegant but functional.")
+		SetInfoText("Toggle optional fix for Stepdodge stamina drain in first person, current fix for this in inelegant but functional. \n Will add around 1/10th to 1/20th of a second extra processing to dodges. \n If you understand behaviour modding, please reach out because I know the proper way to fix it, just don't have the knowledge to do it.")
 	endevent
 endState
 
@@ -400,7 +400,7 @@ event OnOptionHighlight(int option)
 	if(option == Set_DodgeKey)
 		SetInfoText("Dodge Key cannot be set through MCM but can be done through vanilla control configuration. \nSneak Key in the control configuration is treated as Dodge Key.")
 	elseIf(option == Set_DodgeToggleKey)
-		SetInfoText("When ROLL + SIDESTEP is selected, option selected will not be changed. \nWhen either ROLL or SIDESTEP is seleceted, it will changed to one another. \nIf it is toggled during non-combat state, default dodging style will change except when LAST USED is selected. \nIf held, it will switch between ROLL + SIDESTEP (or LAST USED) to either dodging style or the other way round. \n WARNING: Do not bind this key to dodge key or to sneak key. Default: G")
+		SetInfoText("When ROLL + SIDESTEP is selected, option selected will not be changed. \nWhen either ROLL or SIDESTEP is selected, it will changed to one another. \nIf it is toggled during non-combat state, default dodging style will change except when LAST USED is selected. \nIf held, it will switch between ROLL + SIDESTEP (or LAST USED) to either dodging style or the other way round. \n WARNING: Do not bind this key to dodge key or to sneak key. Default: G")
 	elseIf(option == Set_DodgeSpeed)
 		SetInfoText("Method of calculating dodge speed. Default: Weight Dependent \nWeight Dependent: only subjected to speed reduction when above 50% \nArmor Dependent: only subjected to speed reduction for every heavy armor worn")
 	elseIf(option == Set_DodgeFrequency)

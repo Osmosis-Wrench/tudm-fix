@@ -22,8 +22,6 @@ bool changedone = false
 
 bool CrouchSlideMod_Installed
 
-bool StepdodgeStaminaFixEnabled = false
-
 race werewolfBeastRace
 race vampireBeastRace
 
@@ -326,14 +324,6 @@ string function dodgestylestring(int dodgeID)
 	else
 		return "Sidestep"
 	endIf
-endFunction
-
-Function StepdodgeStaminaFix()
-	StepdodgeStaminaFixEnabled = !StepdodgeStaminaFixEnabled
-endFunction
-
-bool Function StepdodgeStaminaFixGet()
-	return StepdodgeStaminaFixEnabled
 endFunction
 
 ; This just makes life easier sometimes.
