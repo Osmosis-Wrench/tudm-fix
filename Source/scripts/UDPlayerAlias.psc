@@ -140,13 +140,13 @@ function SKSECheck()
 	int SKSEVersion = SKSE.getVersionRelease()
 	if(Version == 2)
 		if(SKSEVersion > 0)
-			debug.notification("SKSE detected. TUDM is adapting to new changes...")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: SKSE detected. TUDM is adapting to new changes...")
 			UDSKSEDetect.setValueInt(1)
 			utility.wait(2)
-			debug.notification("Adaptation is complete. Installing MCM Menu....")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: Adaptation is complete. Installing MCM Menu....")
 			SKSEStartUp()
 		else
-			debug.notification("No SKSE detected. TUDM will still continue to function.")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: No SKSE detected. TUDM will still continue to function.")
 			UDSKSEDetect.setValueInt(0)
 			SKSEShutDown()
 		endIf
@@ -154,18 +154,18 @@ function SKSECheck()
 		if(SKSEVersion > 0)
 
 		else
-			debug.notification("Missing SKSE. TUDM is adapting to new changes...")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: Missing SKSE. TUDM is adapting to new changes...")
 			UDSKSEDetect.setValueInt(0)
 			utility.wait(2)
-			debug.notification("Adaptation is complete.")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: Adaptation is complete.")
 			SKSEShutDown()
 		endIf
 	elseIf(Version == 0)
 		if(SKSEVersion > 0)
-			debug.notification("SKSE detected. TUDM is adapting to new changes...")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: SKSE detected. TUDM is adapting to new changes...")
 			UDSKSEDetect.setValueInt(1)
 			utility.wait(2)
-			debug.notification("Adaptation is complete. Installing MCM Menu....")
+			ConsoleUtil.PrintMessage("TUDM Script Fixes: Adaptation is complete. Installing MCM Menu....")
 			SKSEStartUp()
 		endIf
 	endIf
@@ -175,7 +175,7 @@ function ArmorRemoved()
 	playerRef.unequipAll()
 	UDArmorWeight.setValueInt(0)
 	goToState("ArmorRemovedDone")
-	ConsoleUtil.PrintMessage("TUDM: Re-equip all your armor")
+	ConsoleUtil.PrintMessage("TUDM Script Fixes: Re-equip all your armor")
 endFunction
 
 function SKSEStartUp()

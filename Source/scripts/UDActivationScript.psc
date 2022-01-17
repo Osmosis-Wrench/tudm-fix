@@ -99,7 +99,6 @@ event OnAnimationEvent(ObjectReference akSource, string asEventName)
 endEvent
 
 event OnAnimationEventUnregistered(ObjectReference akSource, string asEventName)
-	ConsoleUtil.PrintMessage(asEventName)
 	if(akSource == PlayerRef && asEventName == "RollTrigger")
 		registerForAnimationEvent(player, "RollTrigger")
 	elseIf(akSource == PlayerRef && asEventName == "SidestepTrigger")

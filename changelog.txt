@@ -1,7 +1,7 @@
 changelog v4.8
- - BUGFIX: Using stepdodge in first person would trigger both stepdodge and roll stamina loss, essentially doubling the cost. Fixed, with a toggle to turn off this fix in the MCM incase the slight extra processing causes you issues.
- - CHANGE: Explicit support for Alternate Perspective by Scrab. If you have any issues with this, please report them to me.
- - CHANGE: Removed messagebox that really killed the vibe. Special thanks to Fuzzles for the PR.
+ - BUGFIX: Using stepdodge in first person would trigger both stepdodge and roll stamina loss, essentially doubling the cost. Fixed, with a toggle to turn off this fix in the MCM in case the slight extra processing time causes you issues.
+ - CHANGE: Explicit support for Alternate Perspective by Scrab. If you have any issues with this fix, please report them to me.
+ - CHANGE: Replaced armor unequip messagebox with console notification. Special thanks to Fuzzles for the PR.
 
 changelog v4.7
  - BUGFIX: Changing race or sex in racemenu breaks dodge. Fixed.

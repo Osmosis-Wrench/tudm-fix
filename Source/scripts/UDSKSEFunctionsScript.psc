@@ -61,7 +61,8 @@ function onLoad()
 	if (Game.GetModByName("SprintSlide.esp") != 255)
 		if (!CrouchSlideMod_Installed)
 			CrouchSlideMod_Installed = true
-			debug.notification("TUDM: Crouch Sliding Detected")
+			Debug.Notification("TUDM Script Fixes: Crouch Sliding Detected")
+			consoleutil.PrintMessage("TUDM Script Fixes: Crouch Sliding Detected")
 		endif
 	Else
 		CrouchSlideMod_Installed = false
