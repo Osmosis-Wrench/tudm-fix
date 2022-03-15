@@ -85,7 +85,7 @@ bool function checkValidRace()
 		vampireBeastRace = game.GetFormFromFile(0x00283A, "Dawnguard.esm") as race
 	endif
 	race playerRace = PlayerRef.GetRace()
-	if playerRace != werewolfBeastRace && playerRace != werewolfBeastRace
+	if playerRace != werewolfBeastRace && playerRace != vampireBeastRace
 		return true
 	Else
 		return false
